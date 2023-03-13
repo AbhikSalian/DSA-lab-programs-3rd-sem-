@@ -3,6 +3,7 @@
 #define max 3
 int queue[max];
 int front=-1,rear=-1;
+int count=0;
 void insert(int elem)
 {
     if(front==-1 && rear==-1)
@@ -10,6 +11,7 @@ void insert(int elem)
         front=0;
         rear=0;
         queue[rear]=elem;
+        count++;
     }
     else if((rear+1)%max==front)
     {
@@ -19,6 +21,7 @@ void insert(int elem)
     {
         rear=(rear+1)%max;
         queue[rear]=elem;
+        count++;
     }
 }
 int delete()
@@ -32,16 +35,18 @@ int delete()
         printf("\nThe deleted element is %d\n",queue[front]);
         front=-1;
         rear=-1;
+        count--;
     }
     else
     {
         printf("\nThe deleted element is %d\n",queue[front]);
         front=(front+1)%max;
+        count--;
     }
 }
 void display()
 {
-    int i;
+    int i,j;
     if(front==-1 && rear==-1)
     {
         printf("\nQueue is empty\n");
@@ -49,9 +54,11 @@ void display()
     else
     {
         printf("\nElements of the queue are :");
-        for(i=front;i<=rear;i++)
+        i=(front)%max;
+        for(j=1;j<=count;j++)
         {
             printf("%d\t",queue[i]);
+            i=(i+1)%max;
         }
     }
 }
@@ -61,7 +68,7 @@ void main()
     while(1)
     {
         printf("\n1. Insert\n2. Delete\n3. Display\n4. Exit");
-        printf("Enter your choice : ");
+        printf("\nEnter your choice : ");
         scanf("%d",&choice);
         switch(choice)
         {
